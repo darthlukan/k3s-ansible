@@ -1,0 +1,19 @@
+---
+- name: Copy hardened k3s.service
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/k3s.service"
+    dest: /etc/systemd/system/k3s.service
+
+- name: Reload k3s.service
+  ansible.builtin.systemd:
+    name: k3s.service
+    daemon_reload: yes
+    enabled: "{{ 'yes' if state == 'present' else 'no' }}"
+    state: "{{ 'restarted' if state == 'present' else 'stopped' }}"
+
+- name: Wait up to 2 minutes for apiserver to come back up
+  ansible.builtin.wait_for:
+    host: "{{ groups['master'][0] }}"
+    port: 6443
+    timeout: 120
+...

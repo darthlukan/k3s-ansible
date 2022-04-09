@@ -1,0 +1,9 @@
+---
+- name: "{{ 'Apply' if state == 'present' else 'Remove' }} default psp policies"
+  local_action:
+    module: kubernetes.core.k8s 
+    src: "{{ playbook_dir}}/roles/hardening/files/manifests/default-psp-policy.yaml"
+    kubeconfig: /home/{{ ansible_user }}/.kube/config
+    apply: "{{ 'yes' if state == 'present' else 'no' }}"
+    state: "{{ state }}"
+...

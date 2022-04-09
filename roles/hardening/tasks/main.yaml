@@ -1,0 +1,4 @@
+---
+- import_tasks: kubelet.yaml
+- import_tasks: service.yaml
+...

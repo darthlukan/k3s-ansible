@@ -1,0 +1,19 @@
+---
+- name: Deploy 90-kubelet.conf from template
+  ansible.builtin.template:
+    src: 90-kubelet.conf.j2
+    dest: /etc/sysctl.d/90-kubelet.conf
+    owner: root
+    group: root
+  when: state == 'present'
+
+- name: Remove 90-kubelet.conf from template
+  ansible.builtin.file:
+    state: "{{ state }}"
+    path: /etc/sysctl.d/90-kubelet.conf
+  when: state == 'absent'
+
+- name: Load sysctl configs
+  ansible.builtin.command: sysctl -p /etc/sysctl.d/90-kubelet.conf
+  when: state == 'present'
+...

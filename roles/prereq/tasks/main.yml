@@ -1,4 +1,14 @@
 ---
+- name: pip3 is present
+  ansible.builtin.package:
+    name: python3-pip
+    state: present
+
+- name: OpenShift python module is present
+  ansible.builtin.pip:
+    name: openshift
+    state: present
+
 - name: Set SELinux to disabled state
   selinux:
     state: disabled

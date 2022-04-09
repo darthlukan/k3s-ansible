@@ -1,0 +1,11 @@
+---
+state: 'present'
+
+# # /etc/sysctl.d/90-kubelet.conf.j2
+# Values taken from https://rancher.com/docs/k3s/latest/en/security/hardening_guide/
+vm_panic_on_oom: 0
+vm_overcommit_memory: 1
+kernel_panic: 10
+kernel_panic_on_oops: 1
+kernel_keys_root_maxbytes: 25000000
+...
